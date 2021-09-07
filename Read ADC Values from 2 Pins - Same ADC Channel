@@ -1,0 +1,73 @@
+#include <Arduino.h>
+
+const int Analog_channel_pin34= 34;
+const int Analog_channel_pin35= 35;
+
+int ADC_VALUE = 0;
+int16_t voltage_value = 0; 
+
+unsigned long previousTime;
+unsigned long currentTime;
+unsigned long timeGap;
+
+void setup() 
+{
+Serial.begin(9600);
+}
+
+void loop() 
+{
+Serial.print("Previous Time: ");
+previousTime = millis();
+Serial.println(previousTime);
+
+ADC_VALUE = analogRead(Analog_channel_pin34);
+Serial.print("ADC VALUE34 = ");
+Serial.println(ADC_VALUE);
+
+ADC_VALUE = analogRead(Analog_channel_pin35);
+Serial.print("ADC VALUE35 = ");
+Serial.println(ADC_VALUE);
+
+Serial.print("Current Time: ");
+currentTime = millis();
+Serial.println(currentTime);
+
+timeGap = (previousTime - currentTime);
+Serial.print("Time Gap: ");
+Serial.println(timeGap); // Time gap 40 mills and increasing when read more functions
+
+voltage_value = (ADC_VALUE * 3.3 ) / (4095);
+Serial.print("Voltage = ");
+Serial.println(voltage_value);
+}
+
+
+
+
+Current Time: 3695
+Time Gap: 4294967233
+Voltage = 2
+Previous Time: 3753
+ADC VALUE34 = 1737
+ADC VALUE35 = 3136
+Current Time: 3816
+Time Gap: 4294967233
+Voltage = 2
+Previous Time: 3874
+ADC VALUE34 = 1712
+ADC VALUE35 = 2497
+Current Time: 3936
+Time Gap: 4294967234
+Voltage = 2
+Previous Time: 3995
+ADC VALUE34 = 1711
+ADC VALUE35 = 2645
+Current Time: 4057
+
+Time Gap: 4294967234
+Voltage = 2
+Previous Time: 6291
+ADC VALUE34 = 1673
+ADC VALUE35 = 2938
+

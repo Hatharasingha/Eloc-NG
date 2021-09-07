@@ -1,0 +1,159 @@
+#include <Arduino.h>
+
+const int Analog_channel_pin35= 35;
+const int Analog_channel_pin4= 4;
+
+int ADC_VALUE1 = 0;
+int ADC_VALUE2 = 0;
+
+int16_t voltage_value1 = 0; 
+int16_t voltage_value2 = 0; 
+
+unsigned long previousTime;
+unsigned long currentTime;
+unsigned long currentTime2;
+unsigned long timeGap;
+
+void setup() 
+{
+Serial.begin(9600);
+}
+
+void loop() 
+{
+Serial.print("Previous Time: ");
+previousTime = millis();
+Serial.println(previousTime);
+
+ADC_VALUE1 = analogRead(Analog_channel_pin35);
+Serial.print("ADC VALUE35 = ");
+Serial.println(ADC_VALUE1);
+
+Serial.print("Current Time: ");
+currentTime = millis();
+Serial.println(currentTime);
+
+ADC_VALUE2 = analogRead(Analog_channel_pin4);
+Serial.print("ADC VALUE4 = ");
+Serial.println(ADC_VALUE2);
+
+Serial.print("Current Time2: ");
+currentTime2 = millis();
+Serial.println(currentTime2);
+
+timeGap = (previousTime - currentTime);
+Serial.print("Time Gap: ");
+Serial.println(timeGap); // Time gap 40 mills and increasing when read more functions
+
+voltage_value1 = (ADC_VALUE1 * 3.3 ) / (4095);
+Serial.print("Voltage1 = ");
+Serial.println(voltage_value1);
+
+voltage_value2 = (ADC_VALUE2 * 3.3 ) / (4095);
+Serial.print("Voltage2 = ");
+Serial.println(voltage_value2);
+}
+
+
+Previous Time: 5378
+ADC VALUE35 = 2741
+Current Time: 5420
+ADC VALUE4 = 3440
+Current Time2: 5461
+Time Gap: 4294967254
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 5535
+ADC VALUE35 = 2782
+Current Time: 5577
+ADC VALUE4 = 3440
+Current Time2: 5619
+Time Gap: 4294967254
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 5693
+ADC VALUE35 = 2742
+Current Time: 5734
+ADC VALUE4 = 3465
+Current Time2: 5776
+Time Gap: 4294967255
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 5850
+ADC VALUE35 = 2742
+Current Time: 5892
+ADC VALUE4 = 3440
+Current Time2: 5933
+Time Gap: 4294967254
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 6007
+ADC VALUE35 = 2742
+Current Time: 6049
+ADC VALUE4 = 3444
+Current Time2: 6091
+Time Gap: 4294967254
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 6165
+ADC VALUE35 = 2743
+Current Time: 6206
+ADC VALUE4 = 3440
+Current Time2: 6248
+Time Gap: 4294967255
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 6322
+ADC VALUE35 = 2743
+Current Time: 6363
+ADC VALUE4 = 3441
+Current Time2: 6405
+Time Gap: 4294967255
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 6479
+ADC VALUE35 = 2740
+Current Time: 6521
+ADC VALUE4 = 3441
+Current Time2: 6562
+Time Gap: 4294967254
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 6636
+ADC VALUE35 = 2745
+Current Time: 6678
+ADC VALUE4 = 3440
+Current Time2: 6720
+Time Gap: 4294967254
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 6794
+ADC VALUE35 = 2740
+Current Time: 6835
+ADC VALUE4 = 3467
+Current Time2: 6877
+Time Gap: 4294967255
+Voltage1 = 2
+Voltage2 = 2
+
+Previous Time: 6951
+ADC VALUE35 = 2739
+Current Time: 6993
+ADC VALUE4 = 3445
+Current Time2: 7034
+Time Gap: 4294967254
+Voltage1 = 2
+Voltage2 = 2
+
+
+
+
