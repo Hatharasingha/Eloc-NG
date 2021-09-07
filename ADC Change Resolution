@@ -1,0 +1,101 @@
+#include <Arduino.h>
+
+const int Analog_channel_pin35= 35; //Define the ADC_Channel_1 pin 
+const int Analog_channel_pin4= 4; //Define the ADC_Channel_2 pin 
+
+int ADC_VALUE1 = 0; //Variable for ADC value
+int ADC_VALUE2 = 0; //Variable for ADC value
+
+int16_t voltage_value1 = 0; //Variable for voltage_value
+int16_t voltage_value2 = 0; //Variable for voltage_value
+
+unsigned long previousTime; //Variables for Millis fuction
+unsigned long currentTime;
+unsigned long currentTime2;
+unsigned long timeGap;
+
+void setup() 
+{
+Serial.begin(9600);
+}
+
+void loop() 
+{
+Serial.print("Previous Time: ");
+previousTime = millis(); // Call millis function with the variable
+Serial.println(previousTime);
+
+analogReadResolution(10);   //Resolution = 10, set the sample bits and resolution. It can be a value between 9 (0 – 511) and 12 bits (0 – 4095). Default is 12-bit resolution.
+ADC_VALUE1 = analogRead(Analog_channel_pin35);
+Serial.print("ADC VALUE35 = ");
+Serial.println(ADC_VALUE1);
+delay(1000);
+
+Serial.print("Current Time: "); // Call millis function to find the time gap
+currentTime = millis();
+Serial.println(currentTime);
+delay(1000);
+
+analogReadResolution(12);   //Resolution = 12, Max Value 4095 (Values 9 to 12) 
+ADC_VALUE2 = analogRead(Analog_channel_pin4);
+Serial.print("ADC VALUE4 = ");
+Serial.println(ADC_VALUE2);
+delay(1000);
+
+Serial.print("Current Time2: ");   // Call millis function to find the time gap
+currentTime2 = millis();
+Serial.println(currentTime2);
+delay(1000);
+
+timeGap = (previousTime - currentTime); // Time gap calculation
+Serial.print("Time Gap: ");
+Serial.println(timeGap); // Time gap 40 mills and increasing when read more functions
+
+voltage_value1 = (ADC_VALUE1 * 3.3 ) / (4095); // Voltage calculation
+Serial.print("Voltage1 = ");
+Serial.println(voltage_value1);
+
+voltage_value2 = (ADC_VALUE2 * 3.3 ) / (4095); // Voltage calculation
+Serial.print("Voltage2 = ");
+Serial.println(voltage_value2);
+delay(1000);
+}
+
+
+Previous Time: 5029
+ADC VALUE35 = 1023          //Resolution = 10, This is the Max value 
+Current Time: 6029
+ADC VALUE4 = 4095           //Resolution = 12, This is the Max value 
+Current Time2: 8029
+Time Gap: 4294966296
+Voltage1 = 0
+Voltage2 = 3
+
+Previous Time: 10029
+ADC VALUE35 = 1023
+Current Time: 11029
+ADC VALUE4 = 4095
+Current Time2: 13029
+Time Gap: 4294966296
+Voltage1 = 0
+Voltage2 = 3
+
+Previous Time: 30029
+ADC VALUE35 = 588
+Current Time: 31029
+ADC VALUE4 = 1519
+Current Time2: 33029
+Time Gap: 4294966296
+Voltage1 = 0
+Voltage2 = 1
+
+Previous Time: 35029
+ADC VALUE35 = 588
+Current Time: 36029
+ADC VALUE4 = 1514
+Current Time2: 38029
+Time Gap: 4294966296
+Voltage1 = 0
+Voltage2 = 1
+
+
