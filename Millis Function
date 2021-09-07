@@ -1,0 +1,112 @@
+##include <Arduino.h>
+
+const int Analog_channel_pin= 35;
+int ADC_VALUE = 0;
+int16_t voltage_value = 0; 
+
+unsigned long previousTime;
+unsigned long currentTime;
+unsigned long timeGap;
+
+void setup() 
+{
+Serial.begin(9600);
+}
+
+void loop() 
+{
+Serial.print("Previous Time: ");
+previousTime = millis();
+Serial.println(previousTime);
+
+ADC_VALUE = analogRead(Analog_channel_pin);
+Serial.print("ADC VALUE = ");
+Serial.println(ADC_VALUE);
+
+Serial.print("Current Time: ");
+currentTime = millis();
+Serial.println(currentTime);
+
+timeGap = (previousTime - currentTime);
+Serial.print("Time Gap: ");
+Serial.println(timeGap); // Time gap 40 mills and increasing when read more functions
+
+voltage_value = (ADC_VALUE * 3.3 ) / (4095);
+Serial.print("Voltage = ");
+Serial.print(voltage_value);
+Serial.print("volts");
+}
+
+
+Voltage = 0voltsPrevious Time: 27539
+ADC VALUE = 547
+Current Time: 27579
+Voltage = 0voltsPrevious Time: 27619
+ADC VALUE = 551
+Current Time: 27658
+Voltage = 0voltsPrevious Time: 27698
+ADC VALUE = 528
+Current Time: 27737
+Voltage = 0voltsPrevious Time: 27777
+ADC VALUE = 519
+Current Time: 27817
+Voltage = 0voltsPrevious Time: 27856
+ADC VALUE = 496
+Current Time: 27896
+Voltage = 0voltsPrevious Time: 27935
+ADC VALUE = 464
+Current Time: 27975
+Voltage = 0voltsPrevious Time: 28014
+ADC VALUE = 415
+Current Time: 28054
+Voltage = 0voltsPrevious Time: 28094
+ADC VALUE = 402
+Current Time: 28133
+Voltage = 0voltsPrevious Time: 28173
+ADC VALUE = 382
+Current Time: 28212
+Voltage = 0voltsPrevious Time: 28252
+ADC VALUE = 354
+Current Time: 28292
+
+
+
+
+ADC VALUE = 493
+Current Time: 3206
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3268
+ADC VALUE = 496
+Current Time: 3306
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3368
+ADC VALUE = 525
+Current Time: 3406
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3468
+ADC VALUE = 551
+Current Time: 3506
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3568
+ADC VALUE = 550
+Current Time: 3606
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3668
+ADC VALUE = 546
+Current Time: 3706
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3768
+ADC VALUE = 567
+Current Time: 3806
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3868
+ADC VALUE = 555
+Current Time: 3906
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 3968
+ADC VALUE = 563
+Current Time: 4006
+Time Gap: 4294967258
+Voltage = 0voltsPrevious Time: 4068
+ADC VALUE = 560
+
