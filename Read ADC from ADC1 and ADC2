@@ -1,0 +1,115 @@
+#include <Arduino.h>
+
+const int Analog_channel_pin35= 35;
+const int Analog_channel_pin4= 4;
+
+int ADC_VALUE1 = 0;
+int ADC_VALUE2 = 0;
+
+int16_t voltage_value1 = 0; 
+int16_t voltage_value2 = 0; 
+
+unsigned long previousTime;
+unsigned long currentTime;
+unsigned long timeGap;
+
+void setup() 
+{
+Serial.begin(9600);
+}
+
+void loop() 
+{
+Serial.print("Previous Time: ");
+previousTime = millis();
+Serial.println(previousTime);
+
+ADC_VALUE1 = analogRead(Analog_channel_pin35);
+Serial.print("ADC VALUE35 = ");
+Serial.println(ADC_VALUE1);
+
+ADC_VALUE2 = analogRead(Analog_channel_pin4);
+Serial.print("ADC VALUE4 = ");
+Serial.println(ADC_VALUE2);
+
+Serial.print("Current Time: ");
+currentTime = millis();
+Serial.println(currentTime);
+
+timeGap = (previousTime - currentTime);
+Serial.print("Time Gap: ");
+Serial.println(timeGap); // Time gap 40 mills and increasing when read more functions
+
+voltage_value1 = (ADC_VALUE1 * 3.3 ) / (4095);
+Serial.print("Voltage1 = ");
+Serial.println(voltage_value1);
+
+voltage_value2 = (ADC_VALUE2 * 3.3 ) / (4095);
+Serial.print("Voltage2 = ");
+Serial.println(voltage_value2);
+}
+
+
+Previous Time: 6390
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 6451
+Time Gap: 4294967235
+Voltage1 = 3
+Voltage2 = 3
+
+Previous Time: 6525
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 6586
+Time Gap: 4294967235
+Voltage1 = 3
+Voltage2 = 3
+
+Previous Time: 6660
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 6722
+Time Gap: 4294967234
+Voltage1 = 3
+Voltage2 = 3
+
+Previous Time: 6796
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 6857
+Time Gap: 4294967235
+Voltage1 = 3
+Voltage2 = 3
+
+Previous Time: 6931
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 6993
+Time Gap: 4294967234
+Voltage1 = 3
+Voltage2 = 3
+
+Previous Time: 7067
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 7128
+Time Gap: 4294967235
+Voltage1 = 3
+Voltage2 = 3
+
+Previous Time: 7202
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 7264
+Time Gap: 4294967234
+Voltage1 = 3
+Voltage2 = 3
+
+Previous Time: 7337
+ADC VALUE35 = 4095
+ADC VALUE4 = 4095
+Current Time: 7399
+Time Gap: 4294967234
+Voltage1 = 3
+Voltage2 = 3
