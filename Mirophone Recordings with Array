@@ -1,0 +1,159 @@
+#include <Arduino.h>
+// Libraries for SD card
+#include "SD.h"
+#include <SPI.h>
+
+// Define CS pin for the SD card module
+const int SD_CS = 5;
+
+// Define Analog Micrphone pin for the Microphone
+const int MicADCPin = 34;
+const int MicADCPin2 = 35;
+
+// Store MicADC values
+int ADC_Values = 0;
+int ADC_Values2 = 0;
+
+//Variables for micros fuction
+unsigned long previousTime; 
+unsigned long currentTime;
+
+unsigned long writeTime; 
+unsigned long endWriteTime;
+
+const int Size = 10000;
+int16_t DataArray1 [Size];
+int16_t DataArray2 [Size];
+
+String dataMessage;
+
+
+// Write to the SD card (DON'T MODIFY THIS FUNCTION)
+void writeFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("Writing file: %s\n", path);
+  File file = fs.open(path, FILE_WRITE);
+  if(!file) {
+    //Serial.println("Failed to open file for writing");
+    return;
+  }
+  if(file.print(message)) {
+    //Serial.println("File written");
+  } else {
+    //Serial.println("Write failed");
+  }
+  file.close();
+}
+/* Append data to the SD card (DON'T MODIFY THIS FUNCTION)
+void appendFile(fs::FS &fs, const char * path, const char * message) {
+  Serial.printf("Appending to file: %s\n", path);
+  File file = fs.open(path, FILE_APPEND);
+  if(!file) {
+    //Serial.println("Failed to open file for appending");
+    return;
+  }
+  if(file.print(message)) {
+    //Serial.println("Message appended");
+  } else {
+    //Serial.println("Append failed");
+  }
+  file.close();
+}*/
+
+/* Function to get Microphone Values
+int getReadings(int mic){
+  return analogRead(MicADCPin);  
+}*/
+
+/*int getReadings2(){
+  return analogRead(MicADCPin2);  
+}*/
+
+/* Write the Microphone readings on the SD card
+void logSDCard() {
+  dataMessage =  String(ADC_Values)+ "\r\n";
+  Serial.print("Save data: ");
+  Serial.println(dataMessage);
+  appendFile(SD, "/data.txt", dataMessage.c_str());
+}*/
+
+void setup(){
+   Serial.begin(115200);
+   // Initialize SD card
+  SD.begin(SD_CS);  
+  if(!SD.begin(SD_CS)) {
+    //Serial.println("Card Mount Failed");
+    return;
+  }
+    uint8_t cardType = SD.cardType();
+  if(cardType == CARD_NONE) {
+    //Serial.println("No SD card attached");
+    return;
+  }
+  Serial.println("Initializing SD card...");
+  if (!SD.begin(SD_CS)) {
+    //Serial.println("ERROR - SD card initialization failed!");
+    return;    // init failed
+  }
+  File file = SD.open("/MicRecorde.txt");
+  if(!file) {
+    //Serial.println("File doens't exist");
+    //Serial.println("Creating file...");
+    writeFile(SD, "/MicRecorde.txt", "ADC Values\r\n");
+  }
+  else {
+    //Serial.println("File already exists");  
+  }
+  file.close();
+   
+}
+
+void loop(){
+ //Serial.print("Buffering....");
+ Serial.printf("%d", sizeof(int));
+
+  for (int i = 0; i < Size; i++)
+  {
+    previousTime = micros();
+    DataArray1 [i] = analogRead(MicADCPin);
+    DataArray2 [i] = analogRead(MicADCPin2);
+
+    currentTime = micros();
+  }
+ 
+  writeTime = micros(); 
+
+  File file = SD.open("/MicRecorde.txt", FILE_APPEND);
+    if(!file) {
+    //Serial.println("Failed to open file for appending");
+    return;
+  }
+  
+  for (int i = 0; i < Size; i++)
+  {
+    dataMessage = String(DataArray1[i]) + "," + String(DataArray2[i]) + "\r\n"; 
+    Serial1.print(dataMessage);
+    //appendFile(SD, "/Record.txt", dataMessage.c_str());
+    Serial.printf("Appending to file: %s\n", "/MicRecorde.txt");
+    
+    if(file.print(dataMessage.c_str())) {
+    //Serial.println("Message appended");
+  } else {
+    //Serial.println("Append failed");
+  }
+  }
+ file.close();
+
+
+  endWriteTime = micros();
+
+  Serial.print("Time 1 : ");
+  Serial.println(previousTime);
+  Serial.print("Time 2 : ");
+  Serial.println(currentTime);
+  Serial.print("Write Time : ");
+  Serial.println(writeTime);
+  Serial.print("End Time  : ");
+  Serial.println(endWriteTime);
+}
+
+
